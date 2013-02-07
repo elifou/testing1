@@ -1,0 +1,159 @@
+from random import *
+
+class Poke(object): 
+    """ Poke is the container in which Dice will be stored """   
+    jar = []
+     
+    def __init__(self):
+        pass
+      
+    def add_die(self, sides):
+        #Adds die to the Poke (jar)
+        myDie = Die(sides)
+        self.jar.append(myDie)
+    
+    def pick_die(self):
+        """ This function will pick a random selection of n die and store them in the
+        RandomDie list randomly """
+        N_OF_DIE = 100000
+        
+        RandomDie = []
+            
+        for i in range(N_OF_DIE):
+                            
+            i = choice(self.jar)
+            RandomDie.append(i.sides)                        
+        return RandomDie 
+        
+    
+    def sample_die(self):
+        """ the function goes throught the list of randomly picked and ordered die
+        and rolls them one by one. It will also count the number of each type of die
+        add the sum of the rolls for each die, calculate the average for each die type 
+        rolled and the total sum and average of all the rolls and die types together """
+        #These variables are used to keep track of the rolls
+        NofD4 = 0
+        NofD6 = 0
+        NofD8 = 0
+        NofD12 = 0
+        NofD20 = 0
+        SumOfD4 = 0
+        SumOfD6 = 0
+        SumOfD8 = 0
+        SumOfD12 = 0
+        SumOfD20 = 0
+        totalSum = 0
+        
+        #calls the RandomDie list
+        RandomDie = self.pick_die()
+        
+        #This for loop goes through the list and rolls all of the die
+        for i in range(len(RandomDie)):
+            Roll = randrange(1, RandomDie[i] + 1)
+            
+            #tally's the rolls and the sum of each die type
+            if 5 > RandomDie[i] > 3:
+                NofD4 = NofD4 + 1
+                SumOfD4 = SumOfD4 + Roll
+                
+            if 7 > RandomDie[i] > 5:
+                NofD6 = NofD6 + 1
+                SumOfD6 = SumOfD6 + Roll
+                                
+            if 9 > RandomDie[i] > 7:
+                NofD8 = NofD8 + 1
+                SumOfD8 = SumOfD8 + Roll
+                                
+            if 13 > RandomDie[i] > 11:
+                NofD12 = NofD12 + 1
+                SumOfD12 = SumOfD12 + Roll
+                               
+            if 21 > RandomDie[i] > 19:
+                NofD20 = NofD20 + 1
+                SumOfD20 = SumOfD20 + Roll
+        
+        #Calculates the sum of each die type and prints it out
+        if NofD4 == 0:
+            print "No D4 rolls"
+        else:
+            averageD4 = float(SumOfD4) / NofD4
+            print "Number of D4 rolled", NofD4
+            print "Average D4 roll:", averageD4
+            
+        if NofD6 == 0:
+            print "No D6 rolls"
+        else:        
+            averageD6 = float(SumOfD6) / NofD6
+            print "Number of D6 rolled", NofD6
+            print "Average D6 roll:",averageD6
+            
+        if NofD8 == 0:
+            print "No D8 rolls"
+        else:            
+            averageD8 = float(SumOfD8) / NofD8
+            print "Number of D8 rolled", NofD8
+            print "Average D8 roll:",averageD8
+            
+            
+        if NofD12 == 0:
+            print "No D12 rolls"
+        else:            
+            averageD12 = float(SumOfD12) / NofD12
+            print "Number of D12 rolled", NofD12
+            print "Average D12 roll:",averageD12
+            
+        if NofD20 == 0:
+            print "No D20 rolls"
+        else:            
+            averageD20 = float(SumOfD20) / NofD20
+            print "Number of D20 rolled", NofD20
+            print "Average D20 roll:",averageD20
+        
+        #Calculates the total sum of the rolls
+        totalSum = SumOfD4 + SumOfD6 + SumOfD8 + SumOfD12 + SumOfD20   
+        print 'Total sum of rolls:', totalSum
+        totalAverage = float(totalSum) / len(RandomDie)
+        print 'Total average of rolls:', totalAverage
+        
+       
+class Die(object):
+    """ The Die class defines the die object rolled in the poke class """
+    def __init__(self, sides):
+        self.sides = sides
+
+def main():
+    
+    myPoke = Poke()
+    #This section will defines the die types and how many dice will be in the poke
+    die = []
+    N_OF_TETRA = 1
+    N_OF_HEXA = 1
+    N_OF_OCTA = 1
+    N_OF_DODECA = 1
+    N_OF_ICOSA = 1             
+    
+    print 'Number of D4:', N_OF_TETRA
+    print 'Number of D6:', N_OF_HEXA
+    print 'Number of D8:', N_OF_OCTA
+    print 'Number of D12:', N_OF_DODECA
+    print 'Number of D20:', N_OF_ICOSA
+               
+    TETRA = [4]
+    HEXA = [6]
+    OCTA = [8]
+    DODECA = [12]
+    ICOSA = [20]    
+               
+    die = TETRA * N_OF_TETRA + HEXA * N_OF_HEXA + OCTA * N_OF_OCTA + DODECA * N_OF_DODECA + ICOSA * N_OF_ICOSA    
+    #This for loop will add each die to the poke one after the other
+    for item in die:
+        myPoke.add_die(item)
+    
+    myPoke.pick_die()    
+    myPoke.sample_die()
+    
+if __name__ == '__main__':
+    main()
+
+
+
